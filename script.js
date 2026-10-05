@@ -17,6 +17,17 @@ checkInForm.addEventListener("submit", function (event) {
   const teamCountElement = document.getElementById(`${selectedTeam}Count`);
   teamCountElement.textContent = Number(teamCountElement.textContent) + 1;
 
+  const attendeeItem = document.createElement("li");
+  const attendeeNameElement = document.createElement("span");
+  attendeeNameElement.classList.add("attendee-name");
+  attendeeNameElement.textContent = attendeeName;
+  const attendeeTeamElement = document.createElement("span");
+  attendeeTeamElement.classList.add("attendee-team");
+  attendeeTeamElement.textContent = selectedTeamLabel;
+  attendeeItem.appendChild(attendeeNameElement);
+  attendeeItem.appendChild(attendeeTeamElement);
+  document.getElementById("attendeeList").appendChild(attendeeItem);
+
   const progressPercentage = (attendeeCount / maxGoal) * 100;
   document.getElementById("progressBar").style.width = `${progressPercentage}%`;
   let welcomeMessage = `Welcome, ${attendeeName}! You're checked in with ${selectedTeamLabel}.`;

@@ -19,8 +19,36 @@ checkInForm.addEventListener("submit", function (event) {
 
   const progressPercentage = (attendeeCount / maxGoal) * 100;
   document.getElementById("progressBar").style.width = `${progressPercentage}%`;
-  const welcomeMessage = `Welcome, ${attendeeName}! You're checked in with ${selectedTeamLabel}.`;
-  document.getElementById("greeting").textContent = welcomeMessage;
+  let welcomeMessage = `Welcome, ${attendeeName}! You're checked in with ${selectedTeamLabel}.`;
+
+  if (attendeeCount === maxGoal) {
+    const waterCount = Number(
+      document.getElementById("waterCount").textContent,
+    );
+    const zeroCount = Number(document.getElementById("zeroCount").textContent);
+    const powerCount = Number(
+      document.getElementById("powerCount").textContent,
+    );
+    const highestTeamCount = Math.max(waterCount, zeroCount, powerCount);
+    const winningTeamNames = [];
+
+    if (waterCount === highestTeamCount) {
+      winningTeamNames.push("Team Water Wise");
+    }
+    if (zeroCount === highestTeamCount) {
+      winningTeamNames.push("Team Net Zero");
+    }
+    if (powerCount === highestTeamCount) {
+      winningTeamNames.push("Team Renewables");
+    }
+
+    welcomeMessage = `${welcomeMessage} Goal reached! Congratulations to ${winningTeamNames.join(" and ")}!`;
+  }
+
+  const greetingElement = document.getElementById("greeting");
+  greetingElement.textContent = welcomeMessage;
+  greetingElement.classList.add("success-message");
+  greetingElement.style.display = "block";
 
   checkInForm.reset();
 });
